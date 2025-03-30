@@ -1,7 +1,7 @@
 $breakpoint-small: 768px;
 $bg-color: #fff;
 $fg-color: #000;
-$neutral-bg-color: #424242;
+$neutral-bg-color: #2c2c2c;
 $y-color: #ffbd32;
 $b-color: #605BBD;
 $m-small: 10pt;
@@ -39,14 +39,15 @@ $bw-small: 2pt;
     display: flex;
     flex-direction: column;
     background-color: $neutral-bg-color;
-    margin: 0;
+    padding-top: $m;
+    padding-bottom: $m;
     img {
       margin-left: auto;
       margin-right: auto;
       margin-top: $m;
       width: 90%;
       height: auto;
-      border: $bw-small solid $fg-color;
+      //border: $bw-small solid $fg-color;
       //border-radius: 15pt;
     }
 
@@ -57,32 +58,35 @@ $bw-small: 2pt;
 
   .sub-section:last-child {
     border-bottom: $bw-small solid $b-color;
-    padding-bottom: $m;
+    //padding-bottom: $m;
   }
 }
 
 @mixin sub-section ($size, $color, $sub-size, $m) {
+  padding: $m;
   h3 {
     @include title($size, $color, 500);
-    margin: $m $m 0.25 * $m;
+    margin: 0 0 0.25 * $m;
+    //margin: 0;
   }
 
   p {
     font-size: $sub-size;
     font-weight: 500;
-    margin: 0 $m $m;
+    margin: 0 0 $m;
     word-wrap: break-word;
   }
 
   a {
+    display: inline-block;
     font-size: 0.9 * $sub-size;
     color: $fg-color;
-    margin: 0 $m 0;
+    margin: 0;
     text-decoration: underline;
   }
 
   border-top: $bw-small solid $b-color;
-  margin-top: $m;
+  //margin-top: $m;
 }
 
 @mixin sub-section-card($size, $sub-size, $m, $right: true) {
