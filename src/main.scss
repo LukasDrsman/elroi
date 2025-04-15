@@ -6,7 +6,7 @@ $y-color: #FFBD32;
 $b-color: #2B9D8F;
 $m-small: 10pt;
 $p-small: 12.5pt;
-$bw-small: 3pt;
+$bw-small: 2pt;
 $br-small: 12pt;
 $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
 
@@ -68,7 +68,7 @@ $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
       margin-left: auto;
       margin-right: auto;
       margin-top: $m;
-      width: 90%;
+      width: 100%;
       height: auto;
       //border: $bw-small solid $fg-color;
       //border-radius: 15pt;

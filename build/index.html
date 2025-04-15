@@ -60,15 +60,17 @@
     </div>
 </div>
 <div class="upper-section">
-<div class="section title-margin">
-    <h2 class="text-gradient">Aktuality</h2>
-    <div class="gallery">
-        <img src="./static/aktuality1.png" width="512" height="727" alt="Lukas Drsman photo">
-        <img src="./static/aktuality1.png" width="512" height="727" alt="Lukas Drsman photo">
+    <div class="section title-margin">
+        <h2 class="text-gradient">Aktuality</h2>
+        <div class="gallery">
+            <img src="./static/aktuality1.png" width="512" height="727" alt="Lukas Drsman photo">
+            <img src="./static/aktuality1.png" width="512" height="727" alt="Lukas Drsman photo">
+        </div>
     </div>
-    <h2 class="text-gradient">Sledujte viac</h2>
-    <iframe id="fb-iframe" class="fb-page" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61573191954177&tabs=timeline&width=250&height=500&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId" width="auto" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-</div>
+    <div class="section title-margin" id="ifsec">
+        <h2 class="text-gradient" id="fb-title">Sledujte viac</h2>
+        <iframe id="fb-iframe" class="fb-page" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61573191954177&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId" width="500" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    </div>
 </div>
 <div class="section">
     <h2>Kontaktujte nás</h2>
@@ -98,5 +100,30 @@
         <p>Elroi, o.z.</p>
     </div>
 </div>
+<script>
+    const BREAKPOINT_W = 512 + 2/3;
+    const IFRAME_MARGIN = 4 * 16.666666666666664
+
+    function computeHeight(w) {
+        return 1.2 * (w - BREAKPOINT_W) + IFRAME_MARGIN;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const iframe = document.getElementById("fb-iframe");
+        const cont = document.getElementById("ifsec");
+        const w = document.documentElement.clientWidth - 16.666666666666664 * 2;
+        iframe.style.transform = `scale(${w/500})`;
+        iframe.style.position = "relative";
+        iframe.style.transformOrigin = "top left";
+        cont.style.marginBottom = `${computeHeight(w)}px`;
+
+        window.addEventListener("resize", () => {
+            const w = document.documentElement.clientWidth - 16.666666666666664 * 2;
+            iframe.style.transform = `scale(${w/500})`;
+            iframe.style.position = "relative";
+            cont.style.marginBottom = `${computeHeight(w)}px`;
+        });
+    });
+</script>
 </body>
-</html>
+</html>0.3 * (hf + off)
