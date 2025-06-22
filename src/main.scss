@@ -9,10 +9,47 @@ $p-small: 12.5pt;
 $bw-small: 2pt;
 $br-small: 12pt;
 $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
+$content-radius: 10.5pt;
+$collapsed-height: 180pt;
+$expanded-height: 1000pt;
+$transition-speed: 0.5s;
+$line-height: 1.4em;
+$transition-speed: 0.5s;
+$content-radius: 10.5pt;
+
+$line-height: 12pt;
+$lines: 40;
+
+@keyframes expandContent {
+  @for $i from 0 through $lines {
+    #{percentage($i / $lines)} {
+      max-height: $i * $line-height;
+    }
+  }
+}
+
+@keyframes expandBlur {
+  @for $i from 0 through $lines {
+    #{percentage($i / $lines)} {
+      backdrop-filter: blur($i * 0.25px + 5px);
+    }
+  }
+}
+
+.expanded p {
+  animation: expandContent $transition-speed ease-out;
+  animation-fill-mode: forwards;
+}
+
+p.expanded {
+  animation: expandContent $transition-speed ease-out;
+  animation-fill-mode: forwards;
+}
 
 @mixin border-gradient ($bg, $grad, $bw, $br) {
   border: double $bw transparent;
   border-radius: $br;
+  -webkit-border-radius: $br;
   background-image: linear-gradient($bg, $bg),
                     $gradient;
   background-origin: border-box;
@@ -88,7 +125,7 @@ $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
   @include shadow();
 
   h3 {
-    @include title($size, $color, 500);
+    @include title($size * 0.8, $color, 500);
     margin: 0 0 0.25 * $m;
     //margin: 0;
   }
@@ -100,47 +137,82 @@ $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
     word-wrap: break-word;
   }
 
-  a {
+  p.truncate-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 180pt;
+  }
+
+  p.truncate-text.expanded {
+    -webkit-line-clamp: unset;
+    max-height: 1000px; /* some large value */
+    opacity: 1;
+  }
+
+  button {
+    all: unset;
     display: inline-block;
     font-size: 0.9 * $sub-size;
     color: $fg-color;
     margin: 0;
     text-decoration: underline;
   }
+
+  button:focus {
+    outline: revert;
+  }
   //margin-top: $m;
 }
 
 @mixin sub-section-card($size, $sub-size, $m, $right: true) {
+  border: solid 2pt #2b9d8f;
+  margin: $m;
+  margin-top: 10pt;
+  background-image: url("https://lh3.googleusercontent.com/hkpN1EIghvZX5xJISLrnqUsV6z22UJ6PG3oazjLaMgcTUIB22d058NrF2-cC85GeNi9ViELKK8yNiYvrAyAslsJGmI0=s1280-w1280-h800");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  //width: 350pt;
+  min-height: 350pt;
   display: flex;
-  div {
-    padding: 2 * $m $m;
+  border-radius: 12pt;
+  padding: 0;
 
-    h3 {
-      @include title($size, $fg-color, 600);
-      margin: $m 0 0;
-    }
+  .content {
+    backdrop-filter: blur(5px);
+    background-color: #fff5;
+    margin-top: auto;
+    margin-bottom: 0;
+    padding: 10pt;
+    overflow: hidden;
+    border-radius: 0 0 $content-radius $content-radius;
 
     p {
-      font-size: $sub-size;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
       word-wrap: break-word;
-      color: $fg-color;
-      margin: 0.25 * $m 0 $m;
-      font-weight: 500;
+      font-size: 10.5pt;
+      max-height: $collapsed-height;
+      opacity: 1;
     }
-  }
 
-  img {
-    width: 40%;
-    border: none;
-    margin: 0;
-    @if $right == false {
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
+    &.expanded {
+      animation: expandBlur $transition-speed ease-out;
+      animation-fill-mode: forwards;
+      background-color: #fffa;
+      margin-bottom: -1px;
+      border-radius: $content-radius;
+
+      p {
+        -webkit-line-clamp: unset;
+        //max-height: $expanded-height;
+        opacity: 1;
+      }
     }
-    border-radius: 99em 0 0 99em;
-    height: auto;
-    object-fit: cover;
-    @include shadow();
   }
 }
 
@@ -194,12 +266,10 @@ $gradient: linear-gradient(to right, $b-color 0%, $y-color 100%);
     .sub-section {
       @include sub-section(25pt, $fg-color, $p-small, $m-small);
     }
-    .sub-section-card-r {
+    .sub-section-card{
       @include sub-section-card(22.5pt, 12.5pt, $m-small);
     }
-    .sub-section-card-l {
-      @include sub-section-card(22.5pt, 12.5pt, $m-small, $right: false);
-    }
+
     form {
       display: flex;
       flex-direction: column;
