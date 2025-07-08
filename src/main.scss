@@ -20,6 +20,14 @@ $content-radius: 10.5pt;
 $line-height: 12pt;
 $lines: 40;
 
+a {
+  color: $y-color;
+}
+
+a:visited {
+  color: $b-color;
+}
+
 @keyframes expandContent {
   @for $i from 0 through $lines {
     #{percentage($i / $lines)} {
@@ -82,7 +90,7 @@ p.expanded {
     background-image: $gradient;
     color: transparent;
     background-clip: text;
-    margin: 4 * $m $m 0.25 * $m;
+    margin: 2 * $m $m $m;
   }
 
   p {
@@ -115,6 +123,11 @@ p.expanded {
       margin-bottom: $m;
     }
   }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
 }
 
 @mixin sub-section ($size, $color, $sub-size, $m) {
@@ -167,10 +180,9 @@ p.expanded {
 }
 
 @mixin sub-section-card($size, $sub-size, $m, $right: true) {
-  border: solid 2pt #2b9d8f;
+  //border: solid 2pt #2b9d8f;
   margin: $m;
   margin-top: 10pt;
-  background-image: url("https://lh3.googleusercontent.com/hkpN1EIghvZX5xJISLrnqUsV6z22UJ6PG3oazjLaMgcTUIB22d058NrF2-cC85GeNi9ViELKK8yNiYvrAyAslsJGmI0=s1280-w1280-h800");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -204,7 +216,6 @@ p.expanded {
       animation: expandBlur $transition-speed ease-out;
       animation-fill-mode: forwards;
       background-color: #fffa;
-      margin-bottom: -1px;
       border-radius: $content-radius;
 
       p {
@@ -228,6 +239,7 @@ p.expanded {
   height: 600px; /* Adjust as needed */
   transform: scale(0.9);
   transform-origin: top left;
+  border-radius: $br-small;
 }
 
 
@@ -266,7 +278,7 @@ p.expanded {
     .sub-section {
       @include sub-section(25pt, $fg-color, $p-small, $m-small);
     }
-    .sub-section-card{
+    .sub-section-card {
       @include sub-section-card(22.5pt, 12.5pt, $m-small);
     }
 
@@ -278,11 +290,12 @@ p.expanded {
         font-size: 12.5pt;
         font-family: "IBM Plex Sans", sans-serif;
         box-sizing: border-box;
-        padding: 0.5 * $p-small;
+        padding: 0.8 * $p-small;
         width: 100%;
         border: $bw-small $fg-color solid;
         border-radius: $br-small;
         margin: 0.5 * $m-small auto;
+        color: $neutral-bg-color;
       }
 
       input[type=submit] {
@@ -290,7 +303,21 @@ p.expanded {
         margin-left: auto;
         margin-right: 0;
         width: fit-content;
-        color: $fg-color;
+        color: $neutral-bg-color;
+      }
+
+      label {
+        text-align: end;
+        margin: 5pt 0 5pt auto;
+        color: $bg-color;
+
+        a {
+          color: $y-color;
+        }
+
+        a:visited {
+          color: $b-color;
+        }
       }
     }
 
@@ -319,4 +346,64 @@ p.expanded {
       margin-bottom: $m-small;
     }
   }
+}
+
+#navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75pt;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.1s linear;
+  z-index: 999;
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  margin-left: 0.5 * $m-small;
+}
+
+#logo {
+  height: 80px;
+  transition: all 0.4s ease;
+}
+
+/* Kontaktujte nás tlačidlo */
+#contactButton {
+  border: $bw-small $fg-color solid;
+  border-radius: $br-small;
+  @include border-gradient($bg-color, $gradient, $bw-small, $br-small);
+  width: fit-content;
+  color: $fg-color;
+  pointer-events: none;
+  margin-left: auto;
+  margin-right: $m-small;
+  padding: 0.8 * $p-small;
+  font-size: 16px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Trieda po scrolle */
+#navbar.scrolled {
+  height: 70px;
+  justify-content: flex-start;
+}
+
+#navbar.scrolled .logo-container {
+  justify-content: flex-start;
+}
+
+#navbar.scrolled #logo {
+  height: 40px;
 }
